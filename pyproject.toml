@@ -12,3 +12,6 @@ dev = [
     "ipykernel>=7.1.0",
 ]
 
+[tool.uv.sources]
+httpayer = { path = "../httpayer-py-sdk" }
+
