@@ -39,9 +39,14 @@ This repository contains hands-on examples to get you started quickly.
 Before getting started, ensure you have:
 
 - **Python 3.13+** installed ([download here](https://www.python.org/downloads/))
-- **An EVM or Solana wallet** with a private key (e.g., MetaMask)
-- **USDC** on Base, SKALE Base, or Solana
 - **Git** installed (optional, for cloning the repository)
+
+**For Relay Mode examples** (web3 payments):
+- An EVM or Solana wallet with a private key (e.g., MetaMask)
+- USDC on Base, SKALE Base, or Solana
+
+**For Proxy Mode examples** (API key payments):
+- HTTPayer API key (no web3 wallet needed)
 
 ---
 
@@ -138,7 +143,7 @@ This allows Jupyter to run notebooks using the correct Python environment.
 
 ### 6. Create a `.env` File
 
-Create a `.env` file in the **root directory** (`python-sdk-examples/`) with your EVM private key.
+Create a `.env` file in the **root directory** (`python-sdk-examples/`) with your credentials.
 
 #### **Windows (PowerShell)**
 
@@ -158,10 +163,16 @@ copy .env.sample .env
 cp .env.sample .env
 ```
 
-Then edit the `.env` file and add your private key:
+Then edit the `.env` file and add your credentials:
 
+**For Relay Mode examples** (web3 payments):
 ```env
 EVM_PRIVATE_KEY=your_private_key_here
+```
+
+**For Proxy Mode examples** (API key payments):
+```env
+HTTPAYER_API_KEY=your_api_key_here
 ```
 
 > **Security Warning**: Never commit your `.env` file to version control. It's already in `.gitignore`.
@@ -309,7 +320,7 @@ python scripts/relay/script.py
 
 ### 3. Proxy Mode Examples (`scripts/proxy/`)
 
-Direct x402 payments where you pay the API directly with an API key.
+Pay for x402 APIs using an API key / account system instead of a web3 wallet.
 
 **Coming soon!**
 
@@ -319,12 +330,12 @@ Direct x402 payments where you pay the API directly with an API key.
 
 ### **Relay Mode vs Proxy Mode**
 
-| Feature          | Relay Mode                              | Proxy Mode                             |
-| ---------------- | --------------------------------------- | -------------------------------------- |
-| **Payment Flow** | You → HTTPayer → API                    | You → API (direct)                     |
-| **Privacy**      | HTTPayer hides your wallet address      | Your wallet address is visible to API  |
-| **Speed**        | Faster (no on-chain settlement for you) | Slower (requires on-chain transaction) |
-| **Use Case**     | Quick API access, privacy-preserving    | Full transparency, lower fees          |
+| Feature                     | Relay Mode                           | Proxy Mode                                    |
+| --------------------------- | ------------------------------------ | --------------------------------------------- |
+| **Payment Method**          | Web3 wallet (USDC on-chain)          | API key / Account system                      |
+| **Web3 Wallet Required**    | Yes                                  | No                                            |
+| **Payment Flow**            | You → HTTPayer → API (on-chain)      | Traditional API key authentication            |
+| **Use Case**                | Decentralized payments, crypto apps  | Traditional web apps, no crypto setup needed  |
 
 ### **Payment Headers**
 
