@@ -38,15 +38,15 @@ This repository contains hands-on examples to get you started quickly.
 
 Before getting started, ensure you have:
 
-- **Python 3.13+** installed ([download here](https://www.python.org/downloads/))
+- **Python 3.10+** installed ([download here](https://www.python.org/downloads/))
 - **Git** installed (optional, for cloning the repository)
 
 **For Relay Mode examples** (web3 payments):
-- An EVM or Solana wallet with a private key (e.g., MetaMask)
+- An EVM or Solana wallet with a private key (e.g., MetaMask, Phantom)
 - USDC on Base, SKALE Base, or Solana
 
 **For Proxy Mode examples** (API key payments):
-- HTTPayer API key (no web3 wallet needed)
+- HTTPayer API key with credits (no web3 wallet needed)
 
 ---
 
@@ -99,49 +99,7 @@ This will:
 
 ---
 
-### 4. Activate the Virtual Environment
-
-#### **Windows (PowerShell)**
-
-```powershell
-.venv\Scripts\activate
-```
-
-#### **Windows (CMD)**
-
-```cmd
-.venv\Scripts\activate.bat
-```
-
-#### **macOS / Linux**
-
-```bash
-source .venv/bin/activate
-```
-
-You should see `(.venv)` in your terminal prompt.
-
----
-
-### 5. Install Jupyter Kernel (For Notebook Users)
-
-If you plan to use Jupyter notebooks, create a kernel for this environment:
-
-```bash
-python -m ipykernel install --user --name=.venv
-```
-
-#### **macOS / Linux (if using python3)**
-
-```bash
-python3 -m ipykernel install --user --name=.venv
-```
-
-This allows Jupyter to run notebooks using the correct Python environment.
-
----
-
-### 6. Create a `.env` File
+### 4. Configure Your Environment
 
 Create a `.env` file in the **root directory** (`python-sdk-examples/`) with your credentials.
 
@@ -167,8 +125,10 @@ Then edit the `.env` file and add your credentials:
 
 **For Relay Mode examples** (web3 payments):
 ```env
-EVM_PRIVATE_KEY=your_private_key_here
+EVM_PRIVATE_KEY=your_evm_private_key_here
+SOLANA_PRIVATE_KEY=your_solana_private_key_here
 ```
+Note: Only one key is required, it can be either Solana or EVM private key.
 
 **For Proxy Mode examples** (API key payments):
 ```env
@@ -203,52 +163,35 @@ python-sdk-examples/
 
 ### Running Jupyter Notebooks
 
-1. **Activate the virtual environment** (if not already active):
+1. **Start Jupyter**
 
-   ```bash
-   # Windows
-   .venv\Scripts\activate
+If you plan to use Jupyter notebooks, run the following command from the project root:
 
-   # macOS/Linux
-   source .venv/bin/activate
-   ```
+```bash
+# Using uv
+uv run --with jupyter jupyter lab
+```
 
-2. **Start Jupyter**:
+2. **Open a notebook** (e.g., `notebooks/relay_quickstart.ipynb`)
 
-   ```bash
-   jupyter notebook
-   ```
+3. **Select the kernel**:
 
-3. **Open a notebook** (e.g., `notebooks/relay_quickstart.ipynb`)
-
-4. **Select the kernel**:
-
-   - Click **Kernel → Change Kernel → .venv**
+   - If not already selected, click **Kernel → Change Kernel → Python 3*
    - This ensures the notebook uses the correct Python environment
 
-5. **Run the cells** to execute the examples!
+4. **Run the cells** to execute the examples!
 
 ---
 
 ### Running Python Scripts
 
-1. **Activate the virtual environment**:
+1. **Run a script**:
 
    ```bash
-   # Windows
-   .venv\Scripts\activate
-
-   # macOS/Linux
-   source .venv/bin/activate
+   uv run python scripts/relay/example.py
    ```
 
-2. **Run a script**:
-
-   ```bash
-   python scripts/relay/example.py
-   ```
-
-3. **Check the output** to see payment transactions and API responses.
+2. **Check the output** to see payment transactions and API responses.
 
 ---
 
@@ -274,14 +217,6 @@ A comprehensive Jupyter notebook example that demonstrates:
 - How to decode payment transaction hashes
 - How to combine multiple data sources for AI-powered insights
 
-**To run**:
-
-```bash
-jupyter notebook
-# Open notebooks/relay_quickstart.ipynb
-# Select kernel: .venv
-```
-
 ---
 
 ### 2. Multi-API Orchestration Script (`scripts/relay/script.py`)
@@ -298,17 +233,6 @@ A standalone Python script demonstrating the same multi-API workflow as the note
 - How to structure a production-ready script with HTTPayer
 - Payment extraction and decoding from response headers
 - Error handling for multi-step API workflows
-
-**To run**:
-
-```bash
-# Activate virtual environment first
-source .venv/bin/activate  # macOS/Linux
-.venv\Scripts\activate      # Windows
-
-# Run the script
-python scripts/relay/script.py
-```
 
 **Features**:
 
@@ -335,7 +259,7 @@ Pay for x402 APIs using an API key / account system instead of a web3 wallet.
 | **Payment Method**          | Web3 wallet (USDC on-chain)          | API key / Account system                      |
 | **Web3 Wallet Required**    | Yes                                  | No                                            |
 | **Payment Flow**            | You → HTTPayer → API (on-chain)      | Traditional API key authentication            |
-| **Use Case**                | Decentralized payments, crypto apps  | Traditional web apps, no crypto setup needed  |
+| **Use Case**                | Cross-chain & privacy-preserving payments  | Traditional web apps, no crypto setup needed  |
 
 ### **Payment Headers**
 
@@ -352,9 +276,7 @@ These can be verified on blockchain explorers.
 
 - **HTTPayer Documentation**: [https://docs.httpayer.com](https://docs.httpayer.com)
 - **Python SDK (PyPI)**: [https://pypi.org/project/httpayer/](https://pypi.org/project/httpayer/)
-- **x402 Protocol**: [https://github.com/x402/x402](https://github.com/x402/x402)
-- **Chainlink CCIP**: [https://chain.link/ccip](https://chain.link/ccip)
-- **Get Testnet Tokens**: [https://faucet.circle.com](https://faucet.circle.com)
+- **x402 Protocol**: [https://github.com/coinbase/x402](https://github.com/coinbase/x402)
 
 ---
 
@@ -362,15 +284,9 @@ These can be verified on blockchain explorers.
 
 ### **Issue: `ModuleNotFoundError: No module named 'httpayer'`**
 
-**Solution**: Make sure you've activated the virtual environment and run `uv sync`:
+**Solution**: Make sure you've synced the virtual environment with `uv sync`:
 
 ```bash
-# Windows
-.venv\Scripts\activate
-
-# macOS/Linux
-source .venv/bin/activate
-
 uv sync
 ```
 
@@ -383,19 +299,6 @@ uv sync
 1. Created a `.env` file in the root directory
 2. Added your private key: `EVM_PRIVATE_KEY=your_key_here`
 3. Restarted Jupyter or your Python script
-
----
-
-### **Issue: Jupyter kernel not found**
-
-**Solution**: Install the kernel while the virtual environment is active:
-
-```bash
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
-python -m ipykernel install --user --name=.venv
-```
-
-Then restart Jupyter and select the `.venv` kernel.
 
 ---
 

@@ -13,13 +13,15 @@ load_dotenv()
 
 # Initialize client
 EVM_PRIVATE_KEY = os.getenv("EVM_PRIVATE_KEY")
+SOLANA_PRIVATE_KEY = os.getenv("SOLANA_PRIVATE_KEY")
 
-if not EVM_PRIVATE_KEY:
-    raise ValueError("EVM_PRIVATE_KEY environment variable is not set.")
+PRIVATE_KEY = EVM_PRIVATE_KEY or SOLANA_PRIVATE_KEY # Check EVM first, then Solana
+
+if not PRIVATE_KEY:
+    raise ValueError("EVM_PRIVATE_KEY or SOLANA_PRIVATE_KEY environment variable is not set, or new private key is not generated.")
 
 client = HTTPayerClient(
-    private_key=EVM_PRIVATE_KEY,
-    network="base"  # Network to pay on
+    private_key=PRIVATE_KEY,
 )
 
 print()
