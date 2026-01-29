@@ -3,7 +3,7 @@ name = "python-sdk-examples"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
-    "httpayer==0.2.6",
+    "httpayer>=0.2.9",
     "jupyter>=1.1.1",
 ]
 
@@ -11,7 +11,4 @@ dependencies = [
 dev = [
     "ipykernel>=7.1.0",
 ]
-
-[tool.uv.sources]
-httpayer = { path = "../httpayer-py-sdk" }
 
